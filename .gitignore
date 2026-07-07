@@ -1,0 +1,145 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+coverage.xml
+*.cover
+.testcache/
+pytest_cache/
+
+# Logs
+*.log
+logs/
+app.log
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+.env.prod
+*.key
+*.pem
+*.pub
+*.der
+credentials.json
+aws_credentials
+*.keystore
+secrets.yaml
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.sql.bak
+database.yml
+
+# Build & Dist
+/target
+/build
+/dist
+/out
+*.jar
+*.war
+*.ear
+
+# Cache & Temp
+.cache/
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+.tmp/
+node_modules/
+package-lock.json
+yarn.lock
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+desktop.ini
+
+# IDE Generated
+.pylintrc
+.flake8
+mypy.ini
+setup.cfg
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# CI/CD
+.gitlab-ci.yml.local
+.github/workflows/*.local.yml
+
+# Misc
+.pytest_cache/
+*.pid
+*.sock
+*.json.bak
+__pycache__
+.env.bak
+
+# Keep these files (prefix with ! to keep)
+!.env.example
+!.gitkeep
+!requirements.txt
+!pytest.ini
+!setup.py
+!Dockerfile
+!docker-compose.yml
+!README.md
+!.github/

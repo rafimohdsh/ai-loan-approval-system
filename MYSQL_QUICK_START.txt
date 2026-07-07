@@ -1,0 +1,131 @@
+================================================================================
+MYSQL SETUP - QUICK START
+================================================================================
+
+FILE: MYSQL_SETUP.sql
+
+STEPS:
+1. Open MySQL Workbench
+2. Click File → Open SQL Script → Select MYSQL_SETUP.sql
+3. Click Execute (Ctrl+Shift+Enter) or press the Lightning Bolt icon
+4. Done! All tables created with 6 test scenarios
+
+================================================================================
+TEST SCENARIOS CREATED
+================================================================================
+
+Scenario 1 - APP-001: APPROVED
+  Applicant: John Smith
+  Credit: 750 (Excellent)
+  Income: $150,000
+  DTI: 4% (Low)
+  Decision: ✅ APPROVED
+
+Scenario 2 - APP-002: REJECTED
+  Applicant: Jane Doe
+  Credit: 550 (Poor)
+  Income: $35,000
+  DTI: 62% (High)
+  Decision: ❌ REJECTED
+
+Scenario 3 - APP-003: MANUAL REVIEW
+  Applicant: Michael Johnson
+  Credit: 650 (Fair)
+  Income: $85,000
+  Employment: 1.5 years (New)
+  Decision: 🔄 MANUAL REVIEW
+
+Scenario 4 - APP-004: APPROVED
+  Applicant: Sarah Williams
+  Credit: 800 (Excellent)
+  Income: $250,000
+  Years: 12 (Very Stable)
+  Decision: ✅ APPROVED
+
+Scenario 5 - APP-005: MANUAL REVIEW
+  Applicant: David Brown
+  Status: Self-employed
+  Credit: 680 (Good)
+  Income: $95,000
+  Decision: 🔄 MANUAL REVIEW
+
+Scenario 6 - APP-006: MANUAL REVIEW
+  Applicant: Emily Garcia
+  Credit: NULL (No History)
+  Income: $65,000
+  Years: 1.2 (Recent Grad)
+  Decision: 🔄 MANUAL REVIEW
+
+================================================================================
+VERIFY DATA
+================================================================================
+
+Run in MySQL Workbench:
+
+SELECT 'Customers' as table_name, COUNT(*) as count FROM loan_approval_db.customers
+UNION ALL SELECT 'Loan Applications', COUNT(*) FROM loan_approval_db.loan_applications
+UNION ALL SELECT 'Loan Decisions', COUNT(*) FROM loan_approval_db.loan_decisions
+UNION ALL SELECT 'Audit Logs', COUNT(*) FROM loan_approval_db.audit_logs;
+
+Expected Result:
+  Customers: 6
+  Loan Applications: 6
+  Loan Decisions: 6
+  Audit Logs: 6
+
+================================================================================
+VIEW ALL APPLICATIONS WITH DECISIONS
+================================================================================
+
+SELECT
+  a.application_id,
+  a.applicant_name,
+  a.credit_score,
+  a.annual_income,
+  a.existing_debt,
+  ROUND((a.existing_debt * 12) / a.annual_income * 100, 2) as dti_percent,
+  d.decision_status,
+  ROUND(d.risk_score, 2) as risk_score,
+  ROUND(d.approval_probability * 100, 0) as approval_prob_percent
+FROM loan_approval_db.loan_applications a
+LEFT JOIN loan_approval_db.loan_decisions d ON a.id = d.loan_application_id
+ORDER BY a.created_at DESC;
+
+================================================================================
+DATABASE CONNECTION STRING
+================================================================================
+
+For .env file in your project:
+
+DATABASE_URL=mysql+pymysql://root:password@localhost:3306/loan_approval_db
+
+Replace "root" and "password" with your MySQL credentials.
+
+================================================================================
+ALL TABLES CREATED
+================================================================================
+
+1. customers (6 records)
+   - customer_id, email, phone, credit_score, income, etc.
+
+2. loan_applications (6 records)
+   - application_id, applicant_name, loan_amount, credit_score, etc.
+
+3. loan_decisions (6 records)
+   - decision_id, decision_status, risk_score, approval_probability, etc.
+
+4. audit_logs (6 records)
+   - audit_id, action_type, user_name, timestamp, etc.
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. ✅ Copy MYSQL_SETUP.sql to MySQL Workbench
+2. ✅ Execute the script
+3. ✅ Verify data with count query
+4. ✅ Start FastAPI backend (connects to this database)
+5. ✅ Start Streamlit frontend
+6. ✅ Test applications through UI
+
+================================================================================

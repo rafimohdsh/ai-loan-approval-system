@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: loan_approval
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+      - "8501:8501"
+    environment:
+      DATABASE_URL: mysql+pymysql://root:password@db:3306/loan_approval
+      DEBUG: "False"
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      ALLOWED_HOSTS: localhost,127.0.0.1,app
+      CORS_ORIGINS: http://localhost:3000,http://localhost:8501
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    command: sh -c "sleep 10 && uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 & streamlit run frontend/Home.py --server.port 8501 --server.address 0.0.0.0"
+
+volumes:
+  db_data:
