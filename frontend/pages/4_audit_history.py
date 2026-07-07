@@ -35,17 +35,21 @@ with tab1:
                 if history:
                     df = pd.DataFrame(history)
 
-                    # Display as table
+                    # Convert timestamp to datetime for better display
+                    if 'action_timestamp' in df.columns:
+                        df['action_timestamp'] = pd.to_datetime(df['action_timestamp'])
+
+                    # Display as table with available columns
+                    display_cols = [col for col in [
+                        "action_type",
+                        "action_status",
+                        "reviewer_name",
+                        "action_reason",
+                        "action_timestamp",
+                    ] if col in df.columns]
+
                     st.dataframe(
-                        df[
-                            [
-                                "action_type",
-                                "action_status",
-                                "reviewer_name",
-                                "action_reason",
-                                "action_timestamp",
-                            ]
-                        ].rename(
+                        df[display_cols].rename(
                             columns={
                                 "action_type": "Action",
                                 "action_status": "Status",
@@ -118,15 +122,18 @@ with tab2:
                     st.divider()
 
                     # Activity table
+                    if 'action_timestamp' in df.columns:
+                        df['action_timestamp'] = pd.to_datetime(df['action_timestamp'])
+
+                    display_cols = [col for col in [
+                        "action_type",
+                        "action_status",
+                        "action_reason",
+                        "action_timestamp",
+                    ] if col in df.columns]
+
                     st.dataframe(
-                        df[
-                            [
-                                "action_type",
-                                "action_status",
-                                "action_reason",
-                                "action_timestamp",
-                            ]
-                        ].rename(
+                        df[display_cols].rename(
                             columns={
                                 "action_type": "Action",
                                 "action_status": "Status",

@@ -224,7 +224,27 @@ elif page == "My Queue":
     st.header("📝 My Queue")
 
     if not st.session_state.reviewer_id:
-        st.warning("Please select a reviewer first")
+        st.subheader("Select a Reviewer")
+        try:
+            response = requests.get(f"{API_BASE_URL}/reviewer/profiles")
+            if response.status_code == 200:
+                reviewers = response.json()
+                reviewer_options = {
+                    f"{r['reviewer_name']} ({r['email']})": r['reviewer_id']
+                    for r in reviewers
+                }
+                selected_reviewer = st.selectbox(
+                    "Choose a reviewer",
+                    options=list(reviewer_options.keys()),
+                    key="my_queue_reviewer_select",
+                )
+                if st.button("Select"):
+                    st.session_state.reviewer_id = reviewer_options[selected_reviewer]
+                    st.rerun()
+            else:
+                st.error("Failed to load reviewers")
+        except Exception as e:
+            st.error(f"Error loading reviewers: {str(e)}")
     else:
         try:
             response = requests.get(

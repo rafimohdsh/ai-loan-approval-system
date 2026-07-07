@@ -67,8 +67,8 @@ def get_review_queue(
 ):
     """Get applications in review queue."""
     try:
-        status_enum = ModelReviewStatus[status] if status else None
-        priority_enum = ReviewPriority(priority) if priority else None
+        status_enum = ModelReviewStatus[status.upper()] if status else None
+        priority_enum = ReviewPriority(priority.lower()) if priority else None
 
         assignments = ReviewerService.get_queue(db, status_enum, priority_enum)
 

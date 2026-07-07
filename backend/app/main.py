@@ -50,6 +50,7 @@ logger.info("Including API routers")
 app.include_router(api.endpoints.loans.router)
 app.include_router(api.endpoints.reviewer.router)
 app.include_router(api.endpoints.appeal.router)
+app.include_router(api.endpoints.settings.router)
 logger.info("API routers registered successfully")
 
 

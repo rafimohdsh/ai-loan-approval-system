@@ -1,3 +1,3 @@
-from . import loans, reviewer, appeal
+from . import loans, reviewer, appeal, settings
 
-__all__ = ["loans", "reviewer", "appeal"]
+__all__ = ["loans", "reviewer", "appeal", "settings"]
